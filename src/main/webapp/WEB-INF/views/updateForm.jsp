@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,25 +45,36 @@
 <body>
 
     <h1>게시글 작성</h1>
-    <form action="/TripPlanner/postcreate" method="POST">
+    <form action="/TripPlanner/postview/updatePost?num=${result.p_unique}" method="POST">
         <!-- 작성자 ID -->
         <label for="id">작성자 ID</label>
-        <input type="text" id="id" name="id" maxlength="5"  required>
+        <input type="text" id="id" name="id" maxlength="5" value="${result.id}" required>
         <!-- 제목 -->
         <label for="title">제목</label>
-        <input type="text" id="title" name="title" maxlength="20"required>
+        <input type="text" id="title" name="title" maxlength="20" value="${result.title}" required>
 
         <!-- 내용 -->
         <label for="contents">내용</label>
-        <textarea id="contents" name="contents" rows="5"  required ></textarea>
+        <textarea id="contents" name="contents" rows="5"  required >${result.contents}</textarea>
 
         <!-- 지역 -->
         <label for="region">지역</label>
-        <input type="text" id="region" name="region" maxlength="10" >
+        <input type="text" id="region" name="region" maxlength="10" value="${result.region}">
 
-       
-	   <span>공개 :<input type="radio" name="isPrivate" value="1" checked="checked">비공개 :<input type="radio" name="isPrivate" value="0"></span>
-	
+        <!-- 비공개 여부 -->
+        <c:if test="${result.isPrivate}" >
+        <p>공개 여부 : 공개</p>
+        </c:if>
+        <c:if test="${!result.isPrivate}" >
+        <p>공개 여부 : 비공개</p>
+        </c:if>
+	     <c:if test="${result.isPrivate}">
+	  		  <span>공개 :<input type="radio" name="isPrivate" value="1" checked="checked">비공개 :<input type="radio" name="isPrivate" value="0"></span>
+		</c:if>
+		<c:if test="${!result.isPrivate}">
+	    	<span>공개 :<input type="radio" name="isPrivate" value="1" >비공개 :<input type="radio" name="isPrivate" value="0" checked="checked"></span>
+
+		</c:if>
         <!-- 댓글 허용 여부 -->
         <label for="commentIsAllowed">댓글 허용</label>
         <select id="commentIsAllowed" name="commentIsAllowed">
@@ -73,7 +84,7 @@
 
         <!-- 만족도 -->
         <label for="satisfaction">만족도 (0~100)</label>
-        <input type="number" id="satisfaction" name="satisfaction" min="0" max="100">
+        <input type="number" id="satisfaction" name="satisfaction" value="${result.satisfaction}" min="0" max="100">
 
         <!-- 작성 버튼 -->
         <button type="submit">작성</button>

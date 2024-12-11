@@ -2,28 +2,29 @@ package com.spring.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import com.spring.domain.*;
 import org.springframework.jdbc.core.RowMapper;
 
-import com.spring.domain.Post;
-
 public class PostRowMapper implements RowMapper<Post>{
-
+	
 	@Override
 	public Post mapRow(ResultSet rs, int rowNum) throws SQLException {
 		Post post=new Post();
-		post.setId(rs.getString(1));
-		post.setTitle(rs.getString(2));
-		post.setContents(rs.getString(3));
-		post.setPublishDate(rs.getTimestamp(4));
-		post.setView(rs.getInt(5));
-		post.setLikes(rs.getInt(6));
-		post.setRegion(rs.getString(7));
-		post.setIsPrivate(rs.getString(8));
-		post.setCommentIsAllowed(rs.getBoolean(9));
-		post.setP_unique(rs.getInt(10));
-		post.setSatisfaction(rs.getInt(11));
-		return post;
+        post.setId(rs.getString("id"));
+        post.setTitle(rs.getString("title"));
+        post.setContents(rs.getString("contents"));
+        post.setPublishDate(rs.getTimestamp("publishdate"));
+        post.setView(rs.getInt("view"));
+        post.setLikes(rs.getInt("likes"));
+        post.setRegion(rs.getString("region"));
+        post.setIsPrivate(rs.getString("isprivate"));
+        post.setCommentIsAllowed(rs.getBoolean("CommentIsAllowed"));
+        post.setP_unique(rs.getInt("p_unique"));
+        post.setSatisfaction(rs.getInt("Satisfaction"));
+        return post;
 	}
 
+
+
+	
 }
