@@ -91,7 +91,7 @@
   
   
   <build>
-    <finalName>localMaster</finalName>
+    <finalName>TripPlanner</finalName>
     
     <plugins>
             <plugin>

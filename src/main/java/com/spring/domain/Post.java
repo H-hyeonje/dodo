@@ -97,8 +97,10 @@ public class Post
 	public boolean isCommentIsAllowed() {
 		return commentIsAllowed;
 	}
-	public void setCommentIsAllowed(boolean commentIsAllowed) {
-		this.commentIsAllowed = commentIsAllowed;
+	public void setCommentIsAllowed(String commentIsAllowed) {
+		  if(commentIsAllowed != null) {
+		        this.commentIsAllowed = "1".equals(commentIsAllowed);
+		    }
 	}
 	public int getSatisfaction() {
 		return satisfaction;

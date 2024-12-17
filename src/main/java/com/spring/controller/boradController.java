@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.spring.domain.Post;
@@ -21,31 +22,61 @@ public class boradController {
 	boradService boradService;
 	
 	@GetMapping("/Allboard")
-	public String Allboard(@RequestParam int page, Model model) {
-		DateFormatter DateFormatter=new DateFormatter();
-		ArrayList<String> date=new ArrayList<String>();
-		Map<String, Object> result=boradService.AllboardRead(page);
-		List<Post> Allpost=(List<Post>) result.get("Allpost");
-		int Allpostgetnum=(int)result.get("Allpostgetnum");
-		ArrayList<Integer> getTotalPages=paginationHelper.getTotalPages(Allpostgetnum,10);
-		ArrayList<Integer> getpostnumber=paginationHelper.getpostnumber(Allpostgetnum,page,10);
-		for(int i=0;i<Allpost.size();i++) {
-			String fommet=DateFormatter.formatBoardDate(Allpost.get(i).getPublishDate());
-			date.add(fommet);
-		}
+	public String Allboard(@RequestParam(value = "page",defaultValue = "1")int page, Model model) {
+		Map<String,Object> result=boradService.AllboardRead(page);
+		setBoardModelAttributes(result,page,model);
 		
-		model.addAttribute("date",date);
-		model.addAttribute("getTotalPages",getTotalPages);
-		model.addAttribute("getpostnumber",getpostnumber);
-		model.addAttribute("Allpost",Allpost);
+		int totalPosts = (int) result.get("Allpostgetnum");
+		Map<String, Object> pagination = paginationHelper.getPagination(page, totalPosts, 10, 5);
+		model.addAttribute("currentPage", page);
+		model.addAttribute("pagination", pagination);
 		return "Allboard";
 	}
 	
-
+	
 	@GetMapping("/board/search")
-	public String boardSearch() {
+	public String searchBoard(@RequestParam(value = "page", defaultValue = "1") int page,
+	                          @RequestParam("type") String type,
+	                          @RequestParam("keyword") String keyword,
+	                          Model model) {
+	    
+	    Map<String, Object> result = boradService.searchPosts(type, keyword, page);
+
+	    
+	    setBoardModelAttributes(result, page, model);
+	    int totalPosts = (int) result.get("Allpostgetnum"); 
+	    Map<String, Object> pagination = paginationHelper.getPagination(page, totalPosts, 10, 5);
+	    
+	    
+
+	 
+	    model.addAttribute("type", type);
+	    model.addAttribute("keyword", keyword);
+	    model.addAttribute("currentPage", page);
+	    model.addAttribute("pagination", pagination);
+	    return "SearchBoard";
+	}
+
+	
+	
+	private void setBoardModelAttributes(Map<String,Object> result,int page,Model model) {
+		List<Post> Allpost=(List<Post>) result.get("Allpost");
+		int Allpostgetnum=(int)result.get("Allpostgetnum");
 		
-		return "borad";
+		ArrayList<Integer> getTotalPages = paginationHelper.getTotalPages(Allpostgetnum, 10);
+		ArrayList<Integer> getpostnumber = paginationHelper.getpostnumber(Allpostgetnum, page, 10);
+		
+		DateFormatter dateFormatter = new DateFormatter();
+		ArrayList<String> date=new ArrayList<String>();
+		 for (Post post : Allpost) {
+		        date.add(dateFormatter.formatBoardDate(post.getPublishDate()));
+		    }
+		 
+		 model.addAttribute("date", date);
+		 model.addAttribute("getTotalPages", getTotalPages);
+		 model.addAttribute("getpostnumber", getpostnumber);
+		 model.addAttribute("Allpost", Allpost);
 	}
 	
+
 }

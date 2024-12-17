@@ -1,5 +1,10 @@
 package com.spring.controller;
 
+
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,21 +25,19 @@ public class memberController {
 	}
 	
 	@PostMapping("/login")
-	public String login(Member mamber) {
+	public String login(Member member,HttpSession session) {
+		String id=member.getId();
+		String pw=member.getPw();
 		
-		return "redirect:/";
-	}
-	
-	@GetMapping("/membership")
-	public String membership() {
-		return "membership";
-	}
-	
-	@PostMapping("/membershipCreate")
-	public String mambershipCreate(Member mamber) {
-		memberService.memberCreate(mamber);
-	
-		return "loginPage";
-	}
-	
+		Map<String, Object> results= memberService.getmember(id,pw);
+		if(!results.isEmpty()) {
+			session.setAttribute("userId", results.get("id"));
+			session.setAttribute("userName", results.get("name"));
+			return "redirect:/";
+		}else {
+			
+			return "redirect:/loginPage";
+		}
+		}
 }
+

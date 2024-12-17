@@ -73,14 +73,28 @@
 		</c:if>
 		<c:if test="${!result.isPrivate}">
 	    	<span>공개 :<input type="radio" name="isPrivate" value="1" >비공개 :<input type="radio" name="isPrivate" value="0" checked="checked"></span>
-
 		</c:if>
-        <!-- 댓글 허용 여부 -->
-        <label for="commentIsAllowed">댓글 허용</label>
-        <select id="commentIsAllowed" name="commentIsAllowed">
-            <option value="true" selected>허용</option>
-            <option value="false">비허용</option>
-        </select>
+        <!-- 댓글 허용 여부 표시 -->
+		<c:if test="${result.commentIsAllowed}" >
+		    <p>댓글 허용 여부 : 허용</p>
+		</c:if>
+		<c:if test="${!result.commentIsAllowed}" >
+		    <p>댓글 허용 여부 : 비허용</p>
+		</c:if>
+		
+		<!-- 댓글 허용 여부 선택 라디오 버튼 -->
+		<c:if test="${result.commentIsAllowed}">
+		    <span>
+		        허용 : <input type="radio" name="commentIsAllowed" value="1" checked="checked">
+		        비허용 : <input type="radio" name="commentIsAllowed" value="0">
+		    </span>
+		</c:if>
+		<c:if test="${!result.commentIsAllowed}">
+		    <span>
+		        허용 : <input type="radio" name="commentIsAllowed" value="1">
+		        비허용 : <input type="radio" name="commentIsAllowed" value="0" checked="checked">
+		    </span>
+		</c:if>
 
         <!-- 만족도 -->
         <label for="satisfaction">만족도 (0~100)</label>

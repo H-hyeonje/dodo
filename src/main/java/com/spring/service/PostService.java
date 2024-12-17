@@ -1,10 +1,14 @@
 package com.spring.service;
 
+
 import com.spring.domain.Post;
 
 public interface postService {
-	public Post getpost(int num);
-	public void postdelet(int num);
-	public void postupdate(Post post,int num);
-	
+	 	Post getPostById(int num);
+	    void createPost(Post post);
+	    void deletePost(int num);
+	    void updatePost(Post post, int num);
+	    void incrementViewCount(int postId);
+	    void incrementPostLike(int postId);
+
 }

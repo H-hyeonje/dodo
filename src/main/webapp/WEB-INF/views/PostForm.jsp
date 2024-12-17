@@ -46,36 +46,27 @@
 
     <h1>게시글 작성</h1>
     <form action="/TripPlanner/postcreate" method="POST">
-        <!-- 작성자 ID -->
-        <label for="id">작성자 ID</label>
-        <input type="text" id="id" name="id" maxlength="5"  required>
         <!-- 제목 -->
         <label for="title">제목</label>
         <input type="text" id="title" name="title" maxlength="20"required>
 
         <!-- 내용 -->
         <label for="contents">내용</label>
-        <textarea id="contents" name="contents" rows="5"  required ></textarea>
+        <textarea id="contents" name="contents" rows="28"  required ></textarea>
 
         <!-- 지역 -->
         <label for="region">지역</label>
         <input type="text" id="region" name="region" maxlength="10" >
 
        
-	   <span>공개 :<input type="radio" name="isPrivate" value="1" checked="checked">비공개 :<input type="radio" name="isPrivate" value="0"></span>
-	
-        <!-- 댓글 허용 여부 -->
-        <label for="commentIsAllowed">댓글 허용</label>
-        <select id="commentIsAllowed" name="commentIsAllowed">
-            <option value="true" selected>허용</option>
-            <option value="false">비허용</option>
-        </select>
+	    <span>공개 :<input type="radio" name="isPrivate" value="1" checked="checked">비공개 :<input type="radio" name="isPrivate" value="0"></span>
+		<span>댓글 허용 :<input type="radio" name="commentIsAllowed" value="1" checked="checked"> 허용 안함 :<input type="radio" name="commentIsAllowed" value="0"></span>	
+   
 
         <!-- 만족도 -->
-        <label for="satisfaction">만족도 (0~100)</label>
-        <input type="number" id="satisfaction" name="satisfaction" min="0" max="100">
+        <label for="satisfaction">만족도 (0~5)</label><input type="number" id="satisfaction" name="satisfaction" min="1" max="5">
 
-        <!-- 작성 버튼 -->
+        <br>
         <button type="submit">작성</button>
     </form>
 </body>

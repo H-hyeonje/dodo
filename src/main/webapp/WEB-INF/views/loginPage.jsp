@@ -12,6 +12,5 @@
 		<input type="text" name="pw" >		
 		<input type="submit" value="로그인">
 	</form>
-	<a href="/TripPlanner/membership">회원가입</a>
 </body>
 </html>
